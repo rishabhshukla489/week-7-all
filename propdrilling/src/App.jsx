@@ -2,7 +2,7 @@ import { useContext, useState } from 'react'
 
 import './App.css'
 import { RecoilRoot, useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
-import { countAtom } from './store/atoms/count';
+import { countAtom, evenSelector } from './store/atoms/count';
 // import { CountContext } from './context'
 
 function App() {
@@ -34,6 +34,14 @@ function CountRendered(){
   const count=useRecoilValue(countAtom);
   return <div>
     {count}
+    <EvenCountRenderer/>
+  </div>
+}
+
+function EvenCountRenderer(){
+  const isEven=useRecoilValue(evenSelector);
+  return <div>
+    {isEven?"It is even":null}
   </div>
 }
 
