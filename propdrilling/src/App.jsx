@@ -1,45 +1,54 @@
 import { useContext, useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+
 import './App.css'
-import { CountContext } from './context'
+import { RecoilRoot, useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { countAtom } from './store/atoms/count';
+// import { CountContext } from './context'
 
 function App() {
-  const [count, setCount] = useState(0)
+  // const [count, setCount] = useState(0)
 
   return (
     <>
-     <div>
-      <CountContext.Provider value={count}>
-      <Count setCount={setCount}></Count>
-      </CountContext.Provider>
+     <div><RecoilRoot>
+      <Count></Count></RecoilRoot>
+      {/* <CountContext.Provider value={count}> */}
+      {/* <Count setCount={setCount}></Count> */}
+      {/* </CountContext.Provider> */}
      </div>
     </>
   )
 }
 
 function Count({setCount}){
+  console.log("rerender");
   return <div>
     <CountRendered />
-    <Buttons  setCount={setCount}></Buttons>
+    {/* <Buttons  setCount={setCount}></Buttons> */}
+    <Buttons></Buttons>
   </div>
 }
 
 function CountRendered(){
-  const count=useContext(CountContext)
+  // const count=useContext(CountContext)
+  const count=useRecoilValue(countAtom);
   return <div>
     {count}
   </div>
 }
 
-function Buttons({setCount}){
-  const count=useContext(CountContext)
+// function Buttons({setCount}){
+  function Buttons(){
+    console.log("button re render")
+  // const count=useContext(CountContext)
+  // const [count,setCount] =useRecoilState(countAtom);
+  const setCount =useSetRecoilState(countAtom);
  return <div>
   <button onClick={()=>{
-    setCount(count+1)
+    setCount(count=>count+1)
   }}>Increase</button>
   <button onClick={()=>{
-    setCount(count -1)
+    setCount(count=>count -1)
   }}>Decrease</button>
  </div>
 }
